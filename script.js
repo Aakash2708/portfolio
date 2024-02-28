@@ -71,3 +71,27 @@ $(document).ready(function(){
         }
     });
 });
+document.addEventListener("DOMContentLoaded", function() {
+    var gmailLink = document.getElementById('gmail-link');
+    var emailAddress = document.querySelector('.email-address').innerText;
+    
+    gmailLink.addEventListener('click', function() {
+        // Create a temporary input element
+        var tempInput = document.createElement('input');
+        tempInput.value = emailAddress;
+        document.body.appendChild(tempInput);
+        
+        // Select the email address
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); /*For mobile devices*/
+        
+        // Copy the email address to clipboard
+        document.execCommand('copy');
+        
+        // Remove the temporary input element
+        document.body.removeChild(tempInput);
+        
+        // Show a popup
+        alert('Email address copied to clipboard: ' + emailAddress);
+    });
+});
