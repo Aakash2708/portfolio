@@ -406,7 +406,7 @@ section .title::after{
 }
 .info-details li {
     margin-top: 25px;
-    font-size: 12px;
+    font-size: 16px;
     color: #fff;
 }
 .info-details li i {
