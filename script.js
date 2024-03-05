@@ -33,20 +33,7 @@ $(document).ready(function(){
         $('.menu-btn i').toggleClass("active");
     });
 
-    // typing text animation script
-    var typed = new Typed(".typing", {
-        strings: ["YouTuber", "Developer", "Blogger", "Designer", "Freelancer"],
-        typeSpeed: 100,
-        backSpeed: 60,
-        loop: true
-    });
-
-    var typed = new Typed(".typing-2", {
-        strings: ["YouTuber", "Developer", "Blogger", "Designer", "Freelancer"],
-        typeSpeed: 100,
-        backSpeed: 60,
-        loop: true
-    });
+   
 
     // owl carousel script
     $('.carousel').owlCarousel({
@@ -72,26 +59,28 @@ $(document).ready(function(){
     });
 });
 document.addEventListener("DOMContentLoaded", function() {
-    var gmailLink = document.getElementById('gmail-link');
-    var emailAddress = document.querySelector('.email-address').innerText;
-    
-    gmailLink.addEventListener('click', function() {
-        // Create a temporary input element
-        var tempInput = document.createElement('input');
-        tempInput.value = emailAddress;
-        document.body.appendChild(tempInput);
-        
-        // Select the email address
-        tempInput.select();
-        tempInput.setSelectionRange(0, 99999); /*For mobile devices*/
-        
-        // Copy the email address to clipboard
-        document.execCommand('copy');
-        
-        // Remove the temporary input element
-        document.body.removeChild(tempInput);
-        
-        // Show a popup
-        alert('Email address copied to clipboard: ' + emailAddress);
+    const form = document.getElementById("contact-form");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Fetch form data
+        const formData = new FormData(form);
+
+        // Send email using EmailJS
+        emailjs.send("service_y8vcayg", "template_05bm8c6", {
+            from_name: formData.get("fname") + " " + formData.get("lname"),
+            from_email: formData.get("email"),
+            phone: formData.get("phone"),
+            message: formData.get("message"),
+        })
+        .then(function(response) {
+            console.log("Email sent successfully:", response);
+            alert("Message sent successfully!");
+            form.reset(); // Optionally, reset the form after successful submission
+        }, function(error) {
+            console.error("Email send failed:", error);
+            alert("Oops! Something went wrong.");
+        });
     });
 });
